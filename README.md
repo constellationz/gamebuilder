@@ -133,4 +133,4 @@ local MyMethod = Get.WithMyMethod "Something"
 
 ## Attribution
 
-`namatchi/gamebuilder` is licensed under the MIT license.
+`namatchi/gamebuilder` is licensed under the ISC license.
