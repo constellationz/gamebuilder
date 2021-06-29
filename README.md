@@ -110,9 +110,10 @@ The Get loader can be customized to add extra functionality.
 
 ```lua
 -- Just want to look for assets in a folder? Use ListenFor!
-ListenFor("Remote", Remotes, AssertExistence) -- Adds method Get.Remote
+-- Get.Remote looks for assets parented to Remotes
+ListenFor("Remote", Remotes, AssertExistence)
 
--- Use the built-in Get listener. Searches children in DogFolder.
+-- Results are passed through a function that you can modify as needed
 ListenFor("Dog", DogFolder, function (result, name)
     -- Results are passed through a function
     assert(result ~= nil, "got no result for "..name)
@@ -130,7 +131,7 @@ end
 -- ClientScript
 local Get = require(game:GetService("ReplicatedStorage"):WaitForChild("Get"))
 local Perry = Get.Dog "Perry"
-local Something = Get.WithMyMethod "Something"
+local MyModule = Get.WithMyMethod "Module"
 ```
 
 ## Attribution
