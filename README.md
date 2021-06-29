@@ -74,7 +74,7 @@ Gamebuilder is designed to allow integration with other libraries. The Get loade
 
 ## Configure to your needs
 
-### Add source from external library to the Rojo tree:
+### Add a source from an external library to the Rojo tree:
 
 To include a Rojo tree from another folder, add the directory to `default.project.json` with `$path` set to the correct destination. In this example, Roact is included.
 
@@ -109,17 +109,19 @@ local element = Roact.createElement(...)
 The Get loader can be customized to add extra functionality.
 
 ```lua
--- Get
-ListenFor("Remote", Remotes, AssertExistence) -- Get.Remote
+-- Just want to look for assets in a folder? Use ListenFor!
+ListenFor("Remote", Remotes, AssertExistence) -- Adds method Get.Remote
 
 -- Use the built-in Get listener. Searches children in DogFolder.
 ListenFor("Dog", DogFolder, function (result, name)
+    -- Results are passed through a function
     assert(result ~= nil, "got no result for "..name)
     return result
 end
     
 -- Make a custom get function.
 function Get.WithMyMethod(name)
+    -- Your code here!
     return Folder:FindFirstChild(name)
 end
 ```
@@ -127,8 +129,8 @@ end
 ```lua
 -- ClientScript
 local Get = require(game:GetService("ReplicatedStorage"):WaitForChild("Get"))
-local MyGet = Get.Dog "Perry"
-local MyMethod = Get.WithMyMethod "Something"
+local Perry = Get.Dog "Perry"
+local Something = Get.WithMyMethod "Something"
 ```
 
 ## Attribution
