@@ -22,8 +22,8 @@ By default, the file tree is organized as follows:
 | `src/server` | [ServerScriptService](https://developer.roblox.com/en-us/api-reference/class/ServerScriptService) | Server-side scripts |
 | `src/common` | [ReplicatedStorage](https://developer.roblox.com/en-us/api-reference/class/ReplicatedStorage) | Common modules, assets, and remotes |
 | `src/character` | [StarterCharacterScripts](https://developer.roblox.com/en-us/api-reference/class/StarterCharacterScripts) | Scripts placed in the character |
-| `src/first` | [ReplicatedFirst](https://developer.roblox.com/en-us/api-reference/class/ReplicatedFirst) | Scripts that the client should load first |
-| `src/storage` | [ServerStorage](https://developer.roblox.com/en-us/api-reference/class/ServerStorage) | Assets that the server can access |
+| `src/replicatedfirst` | [ReplicatedFirst](https://developer.roblox.com/en-us/api-reference/class/ReplicatedFirst) | Scripts that the client should load first |
+| `src/serverstorage` | [ServerStorage](https://developer.roblox.com/en-us/api-reference/class/ServerStorage) | Assets that the server can access |
 | `src/workspace` | [Workspace](https://developer.roblox.com/en-us/api-reference/class/Workspace) | Map models |
 
 ### Customizability
@@ -34,10 +34,10 @@ Gamebuilder is designed to allow integration with other libraries. The Get loade
 | - | - | - |
 | `Get "Module"` | `src/common/Modules`, `src/common/Libraries` | Loads modules from common modules and libraries |
 | `Get.Asset "Props/Asset"` | `src/common/Assets` | Gets assets from common storage |
-| `Get.ServerAsset "Asset"` | `src/storage` | Gets a server asset (Server only) |
+| `Get.ServerAsset "Asset"` | `src/serverstorage` | Gets a server asset (Server only) |
 | `Get.Remote "Remote"` | `src/common/Remotes` | Gets a remote |
 | `Get.Server "ServerModule"` | `src/server/ServerModules` | Gets a server module. Useful for server-only functionality, such as data management |
-| `Get.MyMethod()` | Up to you! | Get can be configured in a way that suits your criteria |
+| `Get.MyMethod()` | Up to you! | Program your own method. |
 
 ## Get started
 
@@ -109,29 +109,27 @@ local element = Roact.createElement(...)
 The Get loader can be customized to add extra functionality.
 
 ```lua
--- Just want to look for assets in a folder? Use ListenFor!
--- Get.Remote looks for assets parented to Remotes
+-- In Get.lua
+-- Get.Remote -> look for assets parented to Remotes
 ListenFor("Remote", Remotes, AssertExistence)
 
--- Results are passed through a function that you can modify as needed
+-- Get.Dog -> look for assets in DogFolder, then pass through function
 ListenFor("Dog", DogFolder, function (result, name)
-    -- Results are passed through a function
     assert(result ~= nil, "got no result for "..name)
     return result
 end
     
--- Make a custom get function.
-function Get.WithMyMethod(name)
-    -- Your code here!
+-- DIY
+function Get.MyMethod(name)
     return Folder:FindFirstChild(name)
 end
 ```
 
 ```lua
--- ClientScript
+-- On the client
 local Get = require(game:GetService("ReplicatedStorage"):WaitForChild("Get"))
-local Perry = Get.Dog "Perry"
-local MyModule = Get.WithMyMethod "Module"
+local MyDog = Get.Dog "MyDog"
+local MyThing = Get.MyMethod "MyThing"
 ```
 
 ## Attribution
