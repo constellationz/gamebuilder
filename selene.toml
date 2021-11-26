@@ -1,2 +1,2 @@
 # Configure Selene for Roblox Lua checking
-std = "roblox"
+std = "roblox+roblox"

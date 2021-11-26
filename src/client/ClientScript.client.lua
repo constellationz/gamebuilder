@@ -1,3 +1,3 @@
-local Get = require(game:GetService("ReplicatedStorage"):WaitForChild("Get"))
+local Get = require(workspace.Get)
 
 print("Hello world!", Get.version)

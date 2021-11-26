@@ -1,5 +1,5 @@
 -- Sample class that built with Get
--- local Get = require(game:GetService("ReplicatedStorage"):WaitForChild("Get"))
+-- local Get = require(workspace.Get)
 -- local Maid = Get "Maid"
 
 local SampleClass = {}

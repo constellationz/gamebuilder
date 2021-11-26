@@ -4,7 +4,7 @@ A template for building Rojo projects. Designed with both partial and full manag
 ### Custom Loader
 
 ```lua
-local Get = require(game:GetService("ReplicatedStorage"):WaitForChild("Get"))
+local Get = require(workspace.Get)
 
 local Maps = Get.ServerAsset "Maps" -- Get maps from server storage
 local Crown = Get.Asset "Props/Crown" -- Get the crown asset from common storage
@@ -97,7 +97,7 @@ To include a Rojo tree from another folder, add the directory to `default.projec
 
 ```lua
 -- ClientScript
-local Get = require(game:GetService("ReplicatedStorage"):WaitForChild("Get"))
+local Get = require(workspace.Get)
 local Roact = Get "Roact" -- Roact is loaded as if require(Roact) was called.
 
 -- Modules can be used as normally.
@@ -127,7 +127,7 @@ end
 
 ```lua
 -- On the client
-local Get = require(game:GetService("ReplicatedStorage"):WaitForChild("Get"))
+local Get = require(workspace.Get)
 local MyDog = Get.Dog "MyDog"
 local MyThing = Get.MyMethod "MyThing"
 ```
