@@ -1,33 +1,60 @@
 -- Get is a customizable loader used to retrieve instances and modules
+
 local ContentProvider = game:GetService("ContentProvider")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Props = ReplicatedStorage:WaitForChild("Props")
 local Modules = ReplicatedStorage:WaitForChild("Modules")
-local Remotes = ReplicatedStorage:WaitForChild("Remotes")
 
 local Get = {
 	Version = "1.1.5",
-	
+
 	-- Used to indicate members of a directory in Get searches
 	Directory = ".",
 }
 
+-- Print a greeter that shows the Get version
+function Get.Greet()
+	print("Hello world!", "Get version:", Get.Version)
+end
+
+-- Preload important folders
+function Get.Preload(onPreload)
+	ContentProvider:PreloadAsync({
+		Modules,
+	}, onPreload)
+end
+
 -- Recursively explores children to find an instance
-function Search(parent, locations)
-	local child = parent:FindFirstChild(locations[1])
-	if #locations == 1 then
+function Search(parent, directories)
+	local child = parent:FindFirstChild(directories[1])
+	if #directories == 1 then
 		return child
 	elseif child ~= nil then
-		table.remove(locations, 1)
-		return Search(child, locations)
+		table.remove(directories, 1)
+		return Search(child, directories)
 	end
 end
 
 -- Look for an instance and return it.
--- Allows recursive searches with directory slashes.
-function GetInstance(parent, location)
-	local locations = string.split(location, Get.Directory)
-	return Search(parent, locations)
+-- Allows recursive searches with directory markers.
+function Get.Instance(parent, location)
+	local directories = string.split(location, Get.Directory)
+	return Search(parent, directories)
+end
+
+-- Returns a function that searches for a module in directory
+-- Optionally include a function that does post processing
+function Get.MakeSearcher(parent, postProcess)
+	return function(name)
+		-- get result with GetInstance
+		local result = Get.Instance(parent, name)
+
+		-- if a post-retrieval function is provided, pass results
+		if postProcess ~= nil then
+			return postProcess(result, name)
+		else
+			return result
+		end
+	end
 end
 
 -- Makes sure a result exists.
@@ -48,56 +75,13 @@ function LoadModule(module, name)
 	return require(module)
 end
 
--- Print a greeter that shows the Get version
-function Get.Greet()
-	print("Hello world!", "Get version:", Get.GetVersion)
-end
-
--- Preload important folders
-function Get.Preload(onPreload)
-	ContentProvider:PreloadAsync({
-		Modules,
-		Remotes,
-		Props,
-	}, onPreload)
-end
-
--- Get.Module looks into libraries and Modules
-function Get.Module(name)
-	-- looks for an Instance in Modules
-	return GetInstance(Modules, name)
-end
-
--- Loads from Get.Module
-function Get.LoadedModule(name)
-	local module = Get.Module(name)
-	return LoadModule(module, name)
-end
-
--- Add a Get call bound to GetInstance.
--- Optionally include a post processing function.
-function ListenFor(call, parent, postProcess)
-	Get[call] = function(name)
-		-- get result with GetInstance
-		local result = GetInstance(parent, name)
-
-		-- if a post-retrieval function is provided, pass results
-		if postProcess ~= nil then
-			return postProcess(result, name)
-		else
-			return result
-		end
-	end
-end
-
--- Look into folders different calls.
-ListenFor("Prop", Props, AssertExistence) -- Get.Prop
-ListenFor("Remote", Remotes, AssertExistence) -- Get.Remote
+-- Get.Module tries loading a module in the Modules directory
+Get.Module = Get.MakeSearcher(Modules, LoadModule)
 
 -- When Get(...) is called, it is passed here.
 -- By default, evaluates to Get.LoadedModule
 function RawGet(_, moduleName)
-	return Get.LoadedModule(moduleName)
+	return Get.Module(moduleName)
 end
 setmetatable(Get, {__call = RawGet})
 
