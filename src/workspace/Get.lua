@@ -34,6 +34,11 @@ function Search(parent, directories)
 	end
 end
 
+-- Proxy function for game:GetService
+function Get.Service(...)
+	return game:GetService(...)
+end
+
 -- Look for an instance and return it.
 -- Allows recursive searches with directory markers.
 function Get.Instance(parent, location)
