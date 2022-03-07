@@ -5,6 +5,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Modules = ReplicatedStorage:WaitForChild("Modules")
 
 local Get = {
+	-- The latest version can be found here:
+	-- https://github.com/namatchi/gamebuilder/blob/main/src/workspace/Get.lua
 	Version = "1.1.5",
 
 	-- Used to indicate members of a directory in Get searches
@@ -37,6 +39,11 @@ end
 -- Proxy function for game:GetService
 function Get.Service(...)
 	return game:GetService(...)
+end
+
+-- Get the LocalPlayer
+function Get.LocalPlayer()
+	return Get.Service("Players").LocalPlayer
 end
 
 -- Look for an instance and return it.
