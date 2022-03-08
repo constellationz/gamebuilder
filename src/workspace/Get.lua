@@ -73,7 +73,7 @@ function Search(parent: Instance, directories: table)
 	-- the current directory to search
 	local directory = directories[1]
 	
-	-- when an exclamation wildcard is passed, return
+	-- when a globstar wildcard is passed, return
 	-- all descendants matching classname
 	if directory:sub(1, 2) == "**" then
 		return ConstructDictionary(parent:GetDescendants(), 
