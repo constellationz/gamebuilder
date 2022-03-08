@@ -53,6 +53,12 @@ function Get.Instance(parent, location)
 	return Search(parent, directories)
 end
 
+-- Gets the name of some object given a directory
+function Get.ObjectName(location)
+	local directories = string.split(location, Get.Directory)
+	return directories[#directories]
+end
+
 -- Returns a function that searches for a module in directory
 -- Optionally include a function that does post processing
 function Get.MakeSearcher(parent, postProcess)
