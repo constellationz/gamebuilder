@@ -26,14 +26,38 @@ function Get.Preload(onPreload)
 end
 
 -- Recursively explores children to find an instance
+-- Returns nil if no child is found
+-- Returns instance if a singular child is found
+-- Returns a dictionary of children if a wildcard is passed
 function Search(parent, directories)
-	local child = parent:FindFirstChild(directories[1])
+	-- the current directory to search
+	local directory = directories[1]
+
+	-- when a wildcard is passed, return all children
+	if directory == "*" then
+		-- return in the format {[Instance.Name] = Instance, ...}
+		local dictionary = {}
+		for _, child in pairs (parent:GetChildren()) do
+			dictionary[child.Name] = child
+		end
+		return dictionary
+	end
+
+	-- if only one directory is left, try returning the child
+	-- with the matching name
+	local child = parent:FindFirstChild(directory)
 	if #directories == 1 then
 		return child
-	elseif child ~= nil then
+	end
+	
+	-- search the next directory if applicable
+	if child ~= nil then
 		table.remove(directories, 1)
 		return Search(child, directories)
 	end
+	
+	-- no child found, return nil
+	return nil
 end
 
 -- Proxy function for game:GetService
@@ -62,16 +86,24 @@ end
 -- Returns a function that searches for a module in directory
 -- Optionally include a function that does post processing
 function Get.MakeSearcher(parent, postProcess)
-	return function(name)
-		-- get result with GetInstance
-		local result = Get.Instance(parent, name)
+	return function(directory)
+		-- capture variadic results with table
+		local results = Get.Instance(parent, directory)
 
-		-- if a post-retrieval function is provided, pass results
+		-- if a post-retrieval function is provided, process results
 		if postProcess ~= nil then
-			return postProcess(result, name)
-		else
-			return result
+			-- repopulate results table
+			if typeof(results) == "table" then
+				for i, result in pairs (results) do
+					results[i] = postProcess(result, i)
+				end
+			else
+				-- change single result
+				results = postProcess(results, directory)
+			end
 		end
+
+		return results
 	end
 end
 
@@ -88,7 +120,7 @@ end
 function LoadModule(module, name)
 	AssertExistence(module, name)
 	assert(module:isA("ModuleScript"), string.format(
-		"Tried to load %s which is a %s", name, module.ClassName))
+			"Tried to load %s which is a %s", name, module.ClassName))
 
 	return require(module)
 end
