@@ -7,7 +7,7 @@ local Modules = ReplicatedStorage:WaitForChild("Modules")
 local Get = {
 	-- The latest version can be found here:
 	-- https://github.com/namatchi/gamebuilder/blob/main/src/workspace/Get.lua
-	Version = "1.1.6",
+	Version = "1.1.7",
 
 	-- Used to indicate members of a directory in Get searches
 	Directory = ".",
@@ -25,22 +25,65 @@ function Get.Preload(onPreload)
 	}, onPreload)
 end
 
+-- extract a classname from string
+function MatchClassname(str: string)
+	local str1 = str:match("%<.*%>")
+	return if str1 ~= nil then str1:match("%w+") else nil
+end
+
+-- add something to dictionary with duplicate checks
+function AddToDictionary(dictionary: table, instance: Instance)
+	-- warn if multiple entries have the same name
+	local name = instance.Name
+	if dictionary[name] ~= nil then
+		warn("Duplicate in dictionary:", name)
+	end
+
+	-- add to dictionary
+	dictionary[name] = instance
+end
+
+-- try adding objects to dictionary given they are
+-- of a certain class
+function ConstructDictionary(instances: table, className)
+	local dictionary = {}
+	
+	-- check every instance
+	for _, instance in pairs (instances) do
+		if className == nil or instance:isA(className) then
+			AddToDictionary(dictionary, instance)
+		end
+	end
+	
+	return dictionary
+end
+
 -- Recursively explores children to find an instance
--- Returns nil if no child is found
--- Returns instance if a singular child is found
--- Returns a dictionary of children if a wildcard is passed
-function Search(parent, directories)
+--[[
+	-- Returns nil if no child is found
+	-- Returns instance if a singular child is found
+	-- Returns a dictionary of children if a wildcard is passed
+	
+	-- Examples: 
+	Search(parent, "Common.Module")
+	Search(parent, "Common.*<ModuleScript>")
+	Search(parent, "Common.**<ModuleScript>")
+]]
+function Search(parent: Instance, directories: table)
 	-- the current directory to search
 	local directory = directories[1]
+	
+	-- when an exclamation wildcard is passed, return
+	-- all descendants matching classname
+	if directory:sub(1, 2) == "**" then
+		return ConstructDictionary(parent:GetDescendants(), 
+				MatchClassname(directory))
+	end
 
-	-- when a wildcard is passed, return all children
-	if directory == "*" then
-		-- return in the format {[Instance.Name] = Instance, ...}
-		local dictionary = {}
-		for _, child in pairs (parent:GetChildren()) do
-			dictionary[child.Name] = child
-		end
-		return dictionary
+	-- when an asterisk wildcard is passed, return all children
+	if directory:sub(1, 1) == "*" then
+		return ConstructDictionary(parent:GetChildren(), 
+				MatchClassname(directory))
 	end
 
 	-- if only one directory is left, try returning the child
