@@ -26,8 +26,8 @@ function Get.Preload(onPreload)
 end
 
 -- extract a classname from string
-function MatchClassname(str: string)
-	local str1 = str:match("%<.*%>")
+function MatchClassName(str: string)
+	local str1 = str:match("<.*>")
 	return if str1 ~= nil then str1:match("%w+") else nil
 end
 
@@ -77,13 +77,13 @@ function Search(parent: Instance, directories: table)
 	-- all descendants matching classname
 	if directory:sub(1, 2) == "**" then
 		return ConstructDictionary(parent:GetDescendants(), 
-				MatchClassname(directory))
+				MatchClassName(directory))
 	end
 
 	-- when an asterisk wildcard is passed, return all children
 	if directory:sub(1, 1) == "*" then
 		return ConstructDictionary(parent:GetChildren(), 
-				MatchClassname(directory))
+				MatchClassName(directory))
 	end
 
 	-- if only one directory is left, try returning the child
