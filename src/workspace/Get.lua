@@ -53,8 +53,8 @@ function Get.Instance(parent, location)
 	return Search(parent, directories)
 end
 
--- Gets the name of some object given a directory
-function Get.ObjectName(location)
+-- Gets the name of some instance given a directory
+function Get.InstanceName(location)
 	local directories = string.split(location, Get.Directory)
 	return directories[#directories]
 end
