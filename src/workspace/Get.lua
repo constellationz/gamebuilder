@@ -1,5 +1,6 @@
 -- Get is a customizable loader used to retrieve instances and modules
 
+local RunService = game:GetService("RunService")
 local ContentProvider = game:GetService("ContentProvider")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Modules = ReplicatedStorage:WaitForChild("Modules")
@@ -7,7 +8,7 @@ local Modules = ReplicatedStorage:WaitForChild("Modules")
 local Get = {
 	-- The latest version can be found here:
 	-- https://github.com/namatchi/gamebuilder/blob/main/src/workspace/Get.lua
-	Version = "1.1.7",
+	Version = "1.1.8",
 
 	-- Used to indicate members of a directory in Get searches
 	Directory = ".",
@@ -113,25 +114,24 @@ function Get.LocalPlayer()
 	return Get.Service("Players").LocalPlayer
 end
 
--- Look for an instance and return it.
--- Allows recursive searches with directory markers.
-function Get.Instance(parent, location)
-	local directories = string.split(location, Get.Directory)
-	return Search(parent, directories)
-end
+-- Looks for a child and returns it
+-- Allows recursive searches with directory markers
+function Get.Child(parent: Instance, location: string)
+	-- if either parameter is nil, silently return nil
+	if parent == nil or location == nil then
+		return
+	end
 
--- Gets the name of some instance given a directory
-function Get.InstanceName(location)
-	local directories = string.split(location, Get.Directory)
-	return directories[#directories]
+	-- search for child
+	return Search(parent, string.split(location, Get.Directory))
 end
 
 -- Returns a function that searches for a module in directory
 -- Optionally include a function that does post processing
-function Get.MakeSearcher(parent, postProcess)
-	return function(directory)
+function Get.MakeSearcher(parent: Instance, postProcess)
+	return function(location)
 		-- capture variadic results with table
-		local results = Get.Instance(parent, directory)
+		local results = Get.Child(parent, location)
 
 		-- if a post-retrieval function is provided, process results
 		if postProcess ~= nil then
@@ -142,11 +142,52 @@ function Get.MakeSearcher(parent, postProcess)
 				end
 			else
 				-- change single result
-				results = postProcess(results, directory)
+				results = postProcess(results, location)
 			end
 		end
 
 		return results
+	end
+end
+
+-- Returns a function that explores an "index"
+-- An index is a collection of instances that are created as needed
+--[[
+	Get.Bindable = Get.MakeIndex(Bindables, "BindableEvent")
+	Get.Bindable "MyModule.Bindable" <-- Always returns the same bindable!
+	-- Makes new entries if they don't exist
+	-- Returns the same entry across scripts
+]]
+function Get.MakeIndex(parent: Instance, indexType: string, waitForServer: boolean)
+	-- required to make an index searcher
+	assert(parent ~= nil, "Cannot run Get.MakeIndex for nil parent")
+	assert(indexType ~= nil, "Cannot run Get.MakeIndex for nil indexType")
+	
+	-- cache of indices for speed and security
+	-- similar to loading something and saving it
+	local cache = {}
+
+	-- search the index
+	return function(index)
+		-- try finding the instance
+		-- look at the cache first
+		local instance = cache[index] or 
+			if waitForServer and RunService:IsClient() then 
+				parent:WaitForChild(index) else parent:FindFirstChild(index)
+		
+		-- if the instance doesn't exist, make it
+		if instance == nil then
+			instance = Instance.new(indexType)
+			instance.Parent = parent
+		end
+		
+		-- cache this index
+		if cache[index] == nil then
+			cache[index] = instance
+		end
+		
+		-- return the instance
+		return instance
 	end
 end
 
