@@ -179,6 +179,7 @@ function Get.MakeIndex(parent: Instance, indexType: string, waitForServer: boole
 		if instance == nil then
 			instance = Instance.new(indexType)
 			instance.Parent = parent
+			instance.Name = index
 		end
 		
 		-- cache this index
