@@ -1,4 +1,4 @@
-# namatchi/gamebuilder
+# gamebuilder
 A template for building Rojo projects. Designed with both partial and full management in mind.
 
 ### Custom Loader
@@ -44,7 +44,7 @@ Gamebuilder is designed to allow integration with other libraries. The Get loade
 1. Clone this repository to your project folder.
 
     ```bash
-    git clone https://github.com/namatchi/gamebuilder <project name>
+    git clone https://github.com/constellationz/gamebuilder <project name>
     ```
 
 2. Remove this project's GitHub link.
@@ -134,4 +134,4 @@ local MyThing = Get.MyMethod "MyThing"
 
 ## Attribution
 
-`namatchi/gamebuilder` is licensed under the ISC license.
+`constellationz/gamebuilder` is licensed under the ISC license.
