@@ -7,7 +7,7 @@ local Modules = ReplicatedStorage:WaitForChild("Modules")
 
 local Get = {
 	-- The latest version can be found here:
-	-- https://github.com/namatchi/gamebuilder/blob/main/src/workspace/Get.lua
+	-- https://github.com/constellationz/gamebuilder
 	Version = "1.1.8",
 
 	-- Used to indicate members of a directory in Get searches
