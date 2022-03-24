@@ -151,42 +151,32 @@ function Get.MakeSearcher(parent: Instance, postProcess)
 end
 
 -- Returns a function that explores an "index"
--- An index is a collection of instances that are created as needed
---[[
-	Get.Bindable = Get.MakeIndex(Bindables, "BindableEvent")
-	Get.Bindable "MyModule.Bindable" <-- Always returns the same bindable!
-	-- Makes new entries if they don't exist
-	-- Returns the same entry across scripts
-]]
-function Get.MakeIndex(parent: Instance, indexType: string, waitForServer: boolean)
+-- Indexes can only contain a certain type of instance
+function Get.MakeIndex(parent: Instance, indexType: string)
 	-- required to make an index searcher
 	assert(parent ~= nil, "Cannot run Get.MakeIndex for nil parent")
 	assert(indexType ~= nil, "Cannot run Get.MakeIndex for nil indexType")
 	
-	-- cache of indices for speed and security
-	-- similar to loading something and saving it
-	local cache = {}
+	-- cache all children
+	parent:GetChildren()
 
 	-- search the index
 	return function(index)
-		-- try finding the instance
-		-- look at the cache first
-		local instance = cache[index] or 
-			if waitForServer and RunService:IsClient() then 
-				parent:WaitForChild(index) else parent:FindFirstChild(index)
-		
-		-- if the instance doesn't exist, make it
+		-- get the instance
+		local instance = if RunService:IsClient() then
+			parent:WaitForChild(index) else parent:FindFirstChild(index)
+
+		-- if this instance doesn't exist return nil
 		if instance == nil then
-			instance = Instance.new(indexType)
-			instance.Parent = parent
-			instance.Name = index
+			warn("Could not find index for", index, "in", parent)
+			return nil
 		end
-		
-		-- cache this index
-		if cache[index] == nil then
-			cache[index] = instance
+
+		-- if this instance is of the wrong type, warn the user
+		if instance ~= nil and instance:isA(indexType) == false then
+			warn("Index", index, "is not a(n)", indexType, "in", parent)
 		end
-		
+
 		-- return the instance
 		return instance
 	end
