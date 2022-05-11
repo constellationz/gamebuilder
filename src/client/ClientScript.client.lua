@@ -3,7 +3,7 @@ local Get = require(workspace.Get)
 local Manager = Get "Common.Manager"
 
 -- Connect client systems
-local manager = SystemManager.new()
+local manager = Manager.new()
 manager:AddSystems{
 	"Client.**<ModuleScript>"
 	"Common.**<ModuleScript>",
