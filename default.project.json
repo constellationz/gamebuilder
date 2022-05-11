@@ -2,23 +2,36 @@
   "name": "Project",
   "tree": {
     "$className": "DataModel",
+    "Workspace": {
+      "$className": "Workspace",
+      "$path": "src/workspace"
+    },
     "HttpService": {
       "$className": "HttpService",
       "$properties": {
         "HttpEnabled": true
       }
     },
-    "ReplicatedFirst": {
-      "$className": "ReplicatedFirst",
-      "$path": "src/first"
+    "Lighting": {
+      "$className": "Lighting",
+	  "$path": "src/lighting",
+      "$properties": {
+        "EnvironmentDiffuseScale": 1,
+        "EnvironmentSpecularScale": 1,
+        "GlobalShadows": true,
+        "Technology": "Future"
+      }
     },
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
       "$path": "src/common",
       "Libraries": {
         "$className": "Folder"
-
       }
+    },
+    "ServerStorage": {
+      "$className": "ServerStorage",
+      "$path": "src/storage"
     },
     "ServerScriptService": {
       "$className": "ServerScriptService",
@@ -34,14 +47,6 @@
         "$className": "StarterCharacterScripts",
         "$path": "src/character"
       }
-    },
-    "Workspace": {
-      "$className": "Workspace",
-      "$path": "src/workspace"
-    },
-    "ServerStorage": {
-      "$className": "ServerStorage",
-      "$path": "src/storage"
     }
   }
 }
