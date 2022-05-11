@@ -12,7 +12,7 @@ local DataStore2 = Get "MyModule" -- Load DataStore2 from external repo
 local ForwardData = Get.Remote "ForwardData" -- Get a common remote
 ```
 
-### Straightforward Rojo structure
+### Rojo Structure
 
 By default, the file tree is organized as follows:
 
