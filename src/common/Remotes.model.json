@@ -1,6 +1,6 @@
 {
 	"ClassName": "Folder",
 	"Children": [
-		{"ClassName": "RemoteEvent", "Name": "RemoteEvent"}
+		{"ClassName": "BindableFunction", "Name": "Execute"}
 	]
 }

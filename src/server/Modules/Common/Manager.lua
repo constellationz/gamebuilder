@@ -118,6 +118,12 @@ function Manager:ConnectSystems()
 	end
 end
 
+-- connect the server
+function Manager:ConnectServer()
+	-- systems are connected immediately
+	self:ConnectSystems()
+end
+
 -- connect the client
 function Manager:ConnectClient()
 	-- systems are connected after the game is loaded
@@ -125,12 +131,6 @@ function Manager:ConnectClient()
 		game.Loaded:Wait()
 	end
 
-	self:ConnectSystems()
-end
-
--- connect the server
-function Manager:ConnectServer()
-	-- systems are connected immediately
 	self:ConnectSystems()
 end
 

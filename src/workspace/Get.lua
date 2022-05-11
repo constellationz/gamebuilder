@@ -121,7 +121,7 @@ end
 
 -- Returns a function that searches for a module in directory
 -- Optionally include a function that does post processing
-function Get.MakeSearcher(parent: Instance, postProcess: function)
+function Get.MakeSearcher(parent: Instance, postProcess)
 	return function(location)
 		-- capture variadic results with table
 		local results = Get.Child(parent, location)
@@ -162,6 +162,7 @@ function LoadModule(module: Instance, name: string)
 end
 
 -- Remotes and assets are always replicated
+local Libraries = ReplicatedStorage:WaitForChild("Libraries")
 local Remotes = ReplicatedStorage:WaitForChild("Remotes")
 local Assets = ReplicatedStorage:WaitForChild("Assets")
 
@@ -185,16 +186,20 @@ function Get.ReplicateCommonModules()
 	systems.Parent = ReplicatedStorage
 end
 
--- Get.Module tries loading a module in the Modules directory
-Get.Module = Get.MakeSearcher(Modules, LoadModule)
-Get.System = Get.MakeSearcher(Systems, LoadModule)
+-- Get.Module finds a module and returns it
+Get.Module = Get.MakeSearcher(Modules, AssertExistence)
+Get.System = Get.MakeSearcher(Systems, AssertExistence)
 Get.Remote = Get.MakeSearcher(Remotes, AssertExistence)
 Get.Asset = Get.MakeSearcher(Assets, AssertExistence)
+
+-- Gets loaded library
+Get.Lib = Get.MakeSearcher(Libraries, LoadModule)
+Get.LoadedModule = Get.MakeSearcher(Modules, LoadModule)
 
 -- When Get(...) is called, it is passed here.
 -- By default, evaluates to Get.LoadedModule
 function RawGet(_, moduleName: string)
-	return Get.Module(moduleName)
+	return Get.LoadedModule(moduleName)
 end
 setmetatable(Get, {__call = RawGet})
 
