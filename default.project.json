@@ -9,7 +9,7 @@
     "HttpService": {
       "$className": "HttpService",
       "$properties": {
-        "HttpEnabled": true
+        "HttpEnabled": false
       }
     },
     "Lighting": {
@@ -26,7 +26,13 @@
       "$className": "ReplicatedStorage",
       "$path": "src/common",
       "Libraries": {
-        "$className": "Folder"
+        "$className": "Folder",
+        "Cmdr": {
+            "$path":"./Cmdr/Cmdr"
+        },
+        "ProfileService": {
+            "$path": "./ProfileService/ProfileService.lua"
+        }
       }
     },
     "ServerStorage": {
@@ -35,7 +41,10 @@
     },
     "ServerScriptService": {
       "$className": "ServerScriptService",
-      "$path": "src/server"
+      "$path": "src/server",
+      "$properties": {
+        "LoadStringEnabled": true
+      }
     },
     "StarterPlayer": {
       "$className": "StarterPlayer",
