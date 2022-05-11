@@ -7,7 +7,7 @@ A template for building Rojo projects. Designed with both partial and full manag
 local Get = require(workspace.Get)
 
 local Maps = Get.ServerAsset "Maps" -- Get maps from server storage
-local Crown = Get.Asset "Props/Crown" -- Get the crown asset from common storage
+local Crown = Get.Asset "Props.Crown" -- Get the crown asset from common storage
 local DataStore2 = Get "MyModule" -- Load DataStore2 from external repo
 local ForwardData = Get.Remote "ForwardData" -- Get a common remote
 ```
@@ -22,8 +22,7 @@ By default, the file tree is organized as follows:
 | `src/server` | [ServerScriptService](https://developer.roblox.com/en-us/api-reference/class/ServerScriptService) | Server-side scripts |
 | `src/common` | [ReplicatedStorage](https://developer.roblox.com/en-us/api-reference/class/ReplicatedStorage) | Common modules, assets, and remotes |
 | `src/character` | [StarterCharacterScripts](https://developer.roblox.com/en-us/api-reference/class/StarterCharacterScripts) | Scripts placed in the character |
-| `src/replicatedfirst` | [ReplicatedFirst](https://developer.roblox.com/en-us/api-reference/class/ReplicatedFirst) | Scripts that the client should load first |
-| `src/serverstorage` | [ServerStorage](https://developer.roblox.com/en-us/api-reference/class/ServerStorage) | Assets that the server can access |
+| `src/storage` | [ServerStorage](https://developer.roblox.com/en-us/api-reference/class/ServerStorage) | Assets that the server can access |
 | `src/workspace` | [Workspace](https://developer.roblox.com/en-us/api-reference/class/Workspace) | Map models |
 
 ### Customizability
