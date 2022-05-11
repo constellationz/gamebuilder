@@ -25,19 +25,6 @@ By default, the file tree is organized as follows:
 | `src/storage` | [ServerStorage](https://developer.roblox.com/en-us/api-reference/class/ServerStorage) | Assets that the server can access |
 | `src/workspace` | [Workspace](https://developer.roblox.com/en-us/api-reference/class/Workspace) | Map models |
 
-### Customizability
-
-Gamebuilder is designed to allow integration with other libraries. The Get loader can be modified to fit your needs.
-
-| Get call | Search Location | Functionality |
-| - | - | - |
-| `Get "Module"` | `src/common/Modules`, `src/common/Libraries` | Loads modules from common modules and libraries |
-| `Get.Asset "Props/Asset"` | `src/common/Assets` | Gets assets from common storage |
-| `Get.ServerAsset "Asset"` | `src/serverstorage` | Gets a server asset (Server only) |
-| `Get.Remote "Remote"` | `src/common/Remotes` | Gets a remote |
-| `Get.Server "ServerModule"` | `src/server/ServerModules` | Gets a server module. Useful for server-only functionality, such as data management |
-| `Get.MyMethod()` | Up to you! | Program your own method. |
-
 ## Get started
 
 1. Clone this repository to your project folder.
@@ -69,15 +56,17 @@ Gamebuilder is designed to allow integration with other libraries. The Get loade
     rojo serve
     ```
 
-7. Activate Rojo in studio and begin coding!
+7. Activate Rojo in Studio
 
 ## Configure to your needs
 
 ### Add a source from an external library to the Rojo tree:
 
-To include a Rojo tree from another folder, add the directory to `default.project.json` with `$path` set to the correct destination. In this example, Roact is included.
+To include a Rojo tree from another folder, add the directory to `default.project.json` with `$path` set to the correct destination
 
-*`default.project.json` has a space where external libraries should be added*
+```bash
+git add submodule https://github.com/Roblox/roact 
+```
 
 ```json
 "ReplicatedStorage": {
@@ -85,11 +74,9 @@ To include a Rojo tree from another folder, add the directory to `default.projec
   "$path": "src/common",
   "Libraries": {
     "$className": "Folder",
-
     "Roact": {
-      "$path": "../roact/src"
+      "$path": "./Roact/src"
     }
-
   }
 }
 ```
@@ -97,7 +84,7 @@ To include a Rojo tree from another folder, add the directory to `default.projec
 ```lua
 -- ClientScript
 local Get = require(workspace.Get)
-local Roact = Get "Roact" -- Roact is loaded as if require(Roact) was called.
+local Roact = Get.Lib "Roact" -- Roact is loaded as if require(Roact) was called.
 
 -- Modules can be used as normally.
 local element = Roact.createElement(...)
