@@ -1,5 +1,9 @@
 {
 	"search.useGlobalIgnoreFiles": true,
+	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.patterns":{
+		"init.lua": "*.lua"
+	},
 	"files.exclude": {
 		"Cmdr/**": true,
 		"ProfileService/**": true,
