@@ -1,0 +1,7 @@
+{
+	"search.useGlobalIgnoreFiles": true,
+	"files.exclude": {
+		"Cmdr/**": true,
+		"ProfileService/**": true,
+	}
+}
