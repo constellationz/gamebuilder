@@ -3,12 +3,12 @@
 local RunService = game:GetService("RunService")
 local ContentProvider = game:GetService("ContentProvider")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Modules = ReplicatedStorage:WaitForChild("Modules")
+local ServerScriptService = game:GetService("ServerScriptService")
 
 local Get = {
 	-- The latest version can be found here:
 	-- https://github.com/constellationz/gamebuilder
-	Version = "1.1.8",
+	Version = "1.1.9",
 
 	-- Used to indicate members of a directory in Get searches
 	Directory = ".",
@@ -17,13 +17,6 @@ local Get = {
 -- Print a greeter that shows the Get version
 function Get.Greet()
 	print("Hello world!", "Get version:", Get.Version)
-end
-
--- Preload important folders
-function Get.Preload(onPreload)
-	ContentProvider:PreloadAsync({
-		Modules,
-	}, onPreload)
 end
 
 -- extract a classname from string
@@ -46,7 +39,7 @@ end
 
 -- try adding objects to dictionary given they are
 -- of a certain class
-function ConstructDictionary(instances: table, className)
+function ConstructDictionary(instances: table, className: string)
 	local dictionary = {}
 	
 	-- check every instance
@@ -128,7 +121,7 @@ end
 
 -- Returns a function that searches for a module in directory
 -- Optionally include a function that does post processing
-function Get.MakeSearcher(parent: Instance, postProcess)
+function Get.MakeSearcher(parent: Instance, postProcess: function)
 	return function(location)
 		-- capture variadic results with table
 		local results = Get.Child(parent, location)
@@ -150,40 +143,8 @@ function Get.MakeSearcher(parent: Instance, postProcess)
 	end
 end
 
--- Returns a function that explores an "index"
--- Indexes can only contain a certain type of instance
-function Get.MakeIndex(parent: Instance, indexType: string)
-	-- required to make an index searcher
-	assert(parent ~= nil, "Cannot run Get.MakeIndex for nil parent")
-	assert(indexType ~= nil, "Cannot run Get.MakeIndex for nil indexType")
-	
-	-- cache all children
-	parent:GetChildren()
-
-	-- search the index
-	return function(index)
-		-- get the instance
-		local instance = if RunService:IsClient() then
-			parent:WaitForChild(index) else parent:FindFirstChild(index)
-
-		-- if this instance doesn't exist return nil
-		if instance == nil then
-			warn("Could not find index for", index, "in", parent)
-			return nil
-		end
-
-		-- if this instance is of the wrong type, warn the user
-		if instance ~= nil and instance:isA(indexType) == false then
-			warn("Index", index, "is not a(n)", indexType, "in", parent)
-		end
-
-		-- return the instance
-		return instance
-	end
-end
-
 -- Makes sure a result exists.
-function AssertExistence(result, name)
+function AssertExistence(result: Instance, name: string)
 	if result == nil then
 		error(string.format("Could not find %s", name), 0)
 	else
@@ -192,7 +153,7 @@ function AssertExistence(result, name)
 end
 
 -- Tries to load a module.
-function LoadModule(module, name)
+function LoadModule(module: Instance, name: string)
 	AssertExistence(module, name)
 	assert(module:isA("ModuleScript"), string.format(
 			"Tried to load %s which is a %s", name, module.ClassName))
@@ -200,12 +161,39 @@ function LoadModule(module, name)
 	return require(module)
 end
 
+-- Remotes and assets are always replicated
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+local Assets = ReplicatedStorage:WaitForChild("Assets")
+
+-- Modules and systems are replicated at runtime
+-- Server modules and systems are not replicated to the client
+local Modules = RunService:IsServer() and ServerScriptService.Modules 
+	or ReplicatedStorage:WaitForChild("Modules")
+local Systems = RunService:IsServer() and ServerScriptService.Systems 
+	or ReplicatedStorage:WaitForChild("Systems")
+
+-- Replicate Client and Common modules and systems
+-- Called from ServerScript
+function Get.ReplicateCommonModules()
+	local modules = Modules:Clone()
+	local systems = Systems:Clone()
+
+	modules.Server:Destroy()
+	systems.Server:Destroy()
+
+	modules.Parent = ReplicatedStorage
+	systems.Parent = ReplicatedStorage
+end
+
 -- Get.Module tries loading a module in the Modules directory
 Get.Module = Get.MakeSearcher(Modules, LoadModule)
+Get.System = Get.MakeSearcher(Systems, LoadModule)
+Get.Remote = Get.MakeSearcher(Remotes, AssertExistence)
+Get.Asset = Get.MakeSearcher(Assets, AssertExistence)
 
 -- When Get(...) is called, it is passed here.
 -- By default, evaluates to Get.LoadedModule
-function RawGet(_, moduleName)
+function RawGet(_, moduleName: string)
 	return Get.Module(moduleName)
 end
 setmetatable(Get, {__call = RawGet})
