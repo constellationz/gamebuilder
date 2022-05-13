@@ -7,9 +7,6 @@
 			"label": "Build",
 			"type": "shell",
 			"command": "rojo build -o place.rbxlx",
-			"windows": {
-				"command": "rojo build -o place.rbxlx"
-			},
 			"problemMatcher": [],
 			"group": {
 				"kind": "build",
