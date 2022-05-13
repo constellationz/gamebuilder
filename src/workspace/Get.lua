@@ -8,7 +8,7 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local Get = {
 	-- The latest version can be found here:
 	-- https://github.com/constellationz/gamebuilder
-	Version = "1.1.9",
+	Version = "1.2.0",
 
 	-- Used to indicate members of a directory in Get searches
 	Directory = ".",
