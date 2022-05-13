@@ -1,4 +1,4 @@
-# Tools to install
+# Tools for foreman to install
 
 [tools]
 rojo = { github = "rojo-rbx/rojo", version = "7.0.0" }
