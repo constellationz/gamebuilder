@@ -114,7 +114,7 @@ end
 -- connect each system
 function Manager:ConnectSystems()
 	for _, system in pairs (self.systems) do
-		system.Connect()
+		task.spawn(system.Connect)
 	end
 end
 

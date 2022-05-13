@@ -18,11 +18,13 @@ local Players = Get.Service "Players"
 local TagListener = Get "Common.TagListener"
 local ProfileService = Get.Lib "ProfileService"
 
+-- Stores to use
+local PlayerStore = Get "Server.Stores.PlayerStore"
+
 function Data.Connect()
 	-- Open data profiles
 	Data.OpenStores({
-		Player = Get "Server.Stores.PlayerStore",
-		World = Get "Server.Stores.WorldStore",
+		Player = PlayerStore,
 	})
 
 	-- Connect players to their store
@@ -30,6 +32,10 @@ function Data.Connect()
 		connect = OpenPlayerProfile,
 		disconnect = ClosePlayerProfile,
 	}):ListenTo(Players)
+
+	-- Respond to client key invokes
+	Get.Remote "GetData".OnServerInvoke = GetPlayerData
+	Get.Remote "SetData".OnServerEvent:connect(SetPlayerDataFiltered)
 end
 
 -- Try to open and lock a profile
@@ -80,7 +86,7 @@ function Data.GetPlayerData(player, key)
 		return nil
 	end
 
-	return profile[key]
+	return profile.Data[key]
 end
 
 -- sets player data
@@ -98,9 +104,35 @@ function Data.SetPlayerData(player, key, value)
 	end
 
 	-- set value
-	profile[key] = value
+	profile.Data[key] = value
+
+	-- fire client data update
+	Get.Remote "DataUpdate":FireClient(player, key, value)
 
 	return value
+end
+
+-- set player data while only allowing ClientKeys to be set
+function SetPlayerDataFiltered(player, key, value)
+	assert(key ~= nil, "Argument 2 missing or nil: key")
+
+	local dataType = PlayerStore.ClientKeys[key]
+	local isClientKey = dataType ~= nil
+
+	-- Don't let players set non-client keys
+	if isClientKey == false then
+		warn("Player", player, "tried to set client key", key, "to", value)
+		return
+	end
+
+	-- Don't let players set incorrect data types
+	if dataType ~= typeof(value) then
+		warn("Player", player, "tried to set client key", key, "to incorrect type", typeof(value))
+		return
+	end
+
+	-- At this point, the client key is valid and the data type is correct
+	Data.SetPlayerData(player, key, value)
 end
 
 -- increment the player data
