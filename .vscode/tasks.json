@@ -31,5 +31,17 @@
 			},
 			"problemMatcher": []
 		},
+		{
+			"label": "Install Foreman",
+			"type": "shell",
+			"command": "cargo install foreman",
+			"problemMatcher": [],
+		},
+		{
+			"label": "Install Tools",
+			"type": "shell",
+			"command": "foreman install",
+			"problemMatcher": [],
+		},
 	]
 }
