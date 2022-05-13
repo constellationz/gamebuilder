@@ -16,7 +16,7 @@ local Get = {
 
 -- Print a greeter that shows the Get version
 function Get.Greet()
-	print("Hello world!", "Get version:", Get.Version)
+	print("[Get]: Hello! Version:", Get.Version)
 end
 
 -- extract a classname from string
