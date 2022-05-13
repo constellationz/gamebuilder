@@ -2,7 +2,6 @@
 
 local Get = require(workspace.Get)
 local G = Get "Common.Globals"
-local RunService = Get.Service "RunService"
 
 -- Can this owner command be run?
 function IsOwner(context)
@@ -15,7 +14,7 @@ function IsAdmin(context)
 end
 
 -- Can this debug command be run?
-function CanDebug(context)
+function CanDebug(_)
 	return IsOwner()
 end
 

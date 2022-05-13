@@ -12,9 +12,11 @@ function AddPlayerTag(player)
 	CollectionService:AddTag(player, "Player")
 end
 
-function AddLocalPlayerTag(player)
+function AddLocalPlayerTag()
 	task.spawn(function()
-		repeat task.wait() until Players.LocalPlayer ~= nil
+		repeat 
+			task.wait() 
+		until Players.LocalPlayer ~= nil
 		CollectionService:AddTag(Players.LocalPlayer, "LocalPlayer")
 	end)
 end

@@ -13,13 +13,14 @@ local Data = {
 }
 
 local Get = require(workspace.Get)
-local G = Get "Common.Globals"
 local Players = Get.Service "Players"
 local TagListener = Get "Common.TagListener"
 local ProfileService = Get.Lib "ProfileService"
 
 -- Stores to use
 local PlayerStore = Get "Server.Stores.PlayerStore"
+local OpenPlayerProfile
+local ClosePlayerProfile
 
 function Data.Connect()
 	-- Open data profiles
@@ -34,8 +35,8 @@ function Data.Connect()
 	}):ListenTo(Players)
 
 	-- Respond to client key invokes
-	Get.Remote "GetData".OnServerInvoke = GetPlayerData
-	Get.Remote "SetData".OnServerEvent:connect(SetPlayerDataFiltered)
+	Get.Remote "GetData".OnServerInvoke = Data.GetPlayerData
+	Get.Remote "SetData".OnServerEvent:connect(Data.SetPlayerDataFiltered)
 end
 
 -- Try to open and lock a profile
@@ -113,7 +114,7 @@ function Data.SetPlayerData(player, key, value)
 end
 
 -- set player data while only allowing ClientKeys to be set
-function SetPlayerDataFiltered(player, key, value)
+function Data.SetPlayerDataFiltered(player, key, value)
 	assert(key ~= nil, "Argument 2 missing or nil: key")
 
 	local dataType = PlayerStore.ClientKeys[key]

@@ -1,7 +1,6 @@
 -- Get is a customizable loader used to retrieve instances and modules
 
 local RunService = game:GetService("RunService")
-local ContentProvider = game:GetService("ContentProvider")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 

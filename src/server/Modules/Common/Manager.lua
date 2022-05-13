@@ -46,7 +46,6 @@
 ]]
 
 local Get = require(workspace.Get)
-local RunService = Get.Service "RunService"
 
 local Manager = {}
 Manager.__index = Manager
@@ -88,7 +87,7 @@ function Manager:AddSystems(systems)
 	assert(systems ~= nil, "Argument 1 missing or nil: systems")
 
 	-- add each system
-	for i, directory in pairs (systems) do
+	for _, directory in pairs (systems) do
 		local results = Get.System(directory)
 
 		-- if a wildcard was passed, load each system

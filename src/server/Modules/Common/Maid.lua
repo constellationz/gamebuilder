@@ -56,12 +56,12 @@ end
 -- execute destructors for all tasks
 function Maid:Clean()
 	-- execute named tasks
-	for i, v in pairs (self._tasks) do
+	for _, v in pairs (self._tasks) do
 		Maid.ExecuteTask(v)
 	end
 
 	-- execute unsorted tasks
-	for i, v in ipairs (self._unsortedTasks) do
+	for _, v in ipairs (self._unsortedTasks) do
 		Maid.ExecuteTask(v)
 	end
 end

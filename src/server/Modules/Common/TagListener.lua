@@ -55,12 +55,12 @@ function TagListener.new(tag: string, data: table)
 	}, TagListener)
 
 	-- connect Stepped (if applicable)
-	if step ~= nil and RunService:IsServer() then
-		maid.Stepped = RunService.Stepped:connect(function(_, deltaTime)
+	if self.step ~= nil and RunService:IsServer() then
+		self.maid.Stepped = RunService.Stepped:connect(function(_, deltaTime)
 			self:Step(deltaTime)
 		end)
-	elseif step ~= nil and RunService:IsClient() then
-		maid.RenderStepped = RunService.RenderStepped:connect(function(deltaTime)
+	elseif self.step ~= nil and RunService:IsClient() then
+		self.maid.RenderStepped = RunService.RenderStepped:connect(function(deltaTime)
 			self:Step(deltaTime)
 		end)
 	end

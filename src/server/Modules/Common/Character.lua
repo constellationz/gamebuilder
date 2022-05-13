@@ -2,7 +2,6 @@
 
 local Get = require(workspace.Get)
 local Players = Get.Service "Players"
-local RunService = Get.Service "RunService"
 
 local Character = {}
 
