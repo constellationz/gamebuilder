@@ -8,7 +8,6 @@ local CollectionService = game:GetService("CollectionService")
 
 function AddPlayerTag(player)
 	-- Use task.wait() to avoid CollectionService bug
-	-- https://devforum.roblox.com/t/double-firing-of-collectionservicegetinstanceaddedsignal-when-applying-tag-in-same-frame-that-object-is-added-to-datamodel/244235
 	task.wait()
 	CollectionService:AddTag(player, "Player")
 end
