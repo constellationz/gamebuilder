@@ -4,3 +4,4 @@
 rojo = { github = "rojo-rbx/rojo", version = "7.0.0" }
 tarmac = { github = "Roblox/tarmac", version = "0.7.0" }
 remodel = { github = "rojo-rbx/remodel", version = "0.9.1" }
+selene = { github = "Kampfkarren/selene", version = "0.17.0" }

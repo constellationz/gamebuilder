@@ -32,6 +32,12 @@
 			"problemMatcher": []
 		},
 		{
+			"label": "Check Code",
+			"type": "shell",
+			"command": "selene src",
+			"problemMatcher": []
+		},
+		{
 			"label": "Install Foreman",
 			"type": "shell",
 			"command": "cargo install foreman",
