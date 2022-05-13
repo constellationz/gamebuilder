@@ -75,7 +75,7 @@ git add submodule https://github.com/Roblox/roact
   "Libraries": {
     "$className": "Folder",
     "Roact": {
-      "$path": "./Roact/src"
+      "$path": "./roact/src"
     }
   }
 }
