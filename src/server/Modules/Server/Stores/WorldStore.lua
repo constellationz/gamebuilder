@@ -1,0 +1,6 @@
+return {
+	Key = "WorldData",
+	Defaults = {
+
+	},
+}

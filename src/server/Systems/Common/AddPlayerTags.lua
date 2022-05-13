@@ -1,12 +1,15 @@
 -- Adds Player and LocalPlayer tags to players
 
-local PlayerTags = {}
+local AddPlayerTags = {}
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local CollectionService = game:GetService("CollectionService")
 
 function AddPlayerTag(player)
+	-- Use task.wait() to avoid CollectionService bug
+	-- https://devforum.roblox.com/t/double-firing-of-collectionservicegetinstanceaddedsignal-when-applying-tag-in-same-frame-that-object-is-added-to-datamodel/244235
+	task.wait()
 	CollectionService:AddTag(player, "Player")
 end
 
@@ -18,18 +21,14 @@ function AddLocalPlayerTag(player)
 end
 
 -- Add player tags to all players
-function AddPlayerTags()
-	for _, player in pairs (Players:GetPlayers()) do
-		AddPlayerTag(player)
-	end
-
+function ListenForPlayers()
 	Players.PlayerAdded:connect(AddPlayerTag)
 end
 
-function PlayerTags.Connect()
+function AddPlayerTags.Connect()
 	-- Server adds player tags to all players
 	if RunService:IsServer() then
-		AddPlayerTags()
+		ListenForPlayers()
 	end
 
 	-- Client adds local player tag to players
@@ -38,4 +37,4 @@ function PlayerTags.Connect()
 	end
 end
 
-return PlayerTags
+return AddPlayerTags

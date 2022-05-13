@@ -4,6 +4,9 @@ local RunService = game:GetService("RunService")
 
 local G = {}
 
+-- Should a live game be simulated?
+G.SimulateLive = false
+
 -- Dictionary of UserIds
 -- Can run Owner commands, Admin commands and Debug commands
 G.Owners = {
@@ -15,9 +18,6 @@ G.Owners = {
 G.Admins = {
 
 }
-
--- Should a live game be simulated? (Disables debug mode)
-G.SimulateLive = false
 
 -- Is the game in debug mode?
 function G.IsStudio()

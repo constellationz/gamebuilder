@@ -41,7 +41,7 @@
 	-- before mySystem.Connect is defined, mySystem.manager is set
 	-- to the system manager
 	function mySystem.Connect()
-		TagListener.new(...):ListenTo(workspace)
+		TagListener.new(...)
 	end
 ]]
 
