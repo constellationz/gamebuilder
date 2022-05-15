@@ -31,7 +31,7 @@ A template for building Rojo projects. Designed with both partial and full manag
     rojo build -o place.rbxlx
     ```
 
-    or
+    or (VS Code task)
 
     ```
     task build
@@ -43,7 +43,7 @@ A template for building Rojo projects. Designed with both partial and full manag
     rojo serve
     ```
 
-    or 
+    or (VS Code task)
 
     ```
     task serve
