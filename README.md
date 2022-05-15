@@ -20,7 +20,13 @@ A template for building Rojo projects. Designed with both partial and full manag
 3. Initialize the submodules
 
     ```bash
-    git submodule init
+    git submodule update --init --recursive
+    ```
+
+    or (VS Code task)
+
+    ```bash
+    task pull submodules
     ```
 
 4. Make sure [Rojo](https://github.com/rojo-rbx/rojo) is set up and added to your PATH.

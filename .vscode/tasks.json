@@ -46,5 +46,11 @@
 			"command": "foreman install",
 			"problemMatcher": [],
 		},
+		{
+			"label": "Pull Submodules",
+			"type": "shell",
+			"command": "git submodule update --init --recursive",
+			"problemMatcher": []
+		},
 	]
 }
