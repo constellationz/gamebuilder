@@ -4,7 +4,10 @@
     "$className": "DataModel",
     "Workspace": {
       "$className": "Workspace",
-      "$path": "src/workspace"
+      "$path": "src/workspace",
+      "Map": {
+        "$path":"temp/models/map"
+      }
     },
     "HttpService": {
       "$className": "HttpService",
@@ -14,7 +17,7 @@
     },
     "Lighting": {
       "$className": "Lighting",
-	  "$path": "src/lighting",
+      "$path": "temp/models/lighting",
       "$properties": {
         "EnvironmentDiffuseScale": 1,
         "EnvironmentSpecularScale": 1,
@@ -33,11 +36,18 @@
         "ProfileService": {
             "$path": "./ProfileService/ProfileService.lua"
         }
+      },
+      "Assets": {
+        "$path": "temp/models/assets"
       }
+    },
+    "StarterGui": {
+        "$className": "ServerStorage",
+        "$path": "temp/models/gui"
     },
     "ServerStorage": {
       "$className": "ServerStorage",
-      "$path": "src/storage"
+      "$path": "temp/models/storage"
     },
     "ServerScriptService": {
       "$className": "ServerScriptService",

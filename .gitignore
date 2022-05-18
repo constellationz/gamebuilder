@@ -1,8 +1,9 @@
 # exclude exported place
-place.rbxlx
+./place.rbxlx
+./place.rbxlx.lock
 
-# if place is open, exclude the lock file
-place.rbxlx.lock
+# exclude generated files
+temp/
 
 # exclude generated selene config
 roblox.toml
