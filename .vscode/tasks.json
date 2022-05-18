@@ -4,9 +4,9 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Compile Place",
+			"label": "Check Code",
 			"type": "shell",
-			"command": "rojo build -o place.rbxlx",
+			"command": "selene src",
 			"problemMatcher": []
 		},
 		{
@@ -14,23 +14,11 @@
 			"type": "shell",
 			"command": "remodel run export",
 			"problemMatcher": [],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
 		},
 		{
-			"label": "Build",
-			"dependsOn": [
-				"Export Models",
-				"Compile Place"
-			],
-			"problemMatcher": []
-		},
-		{
-			"label": "Serve",
+			"label": "Compile Place",
 			"type": "shell",
-			"command": "rojo serve",
+			"command": "rojo build -o place.rbxlx",
 			"problemMatcher": []
 		},
 		{
@@ -43,10 +31,24 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Check Code",
+			"label": "Serve",
 			"type": "shell",
-			"command": "selene src",
+			"command": "rojo serve",
 			"problemMatcher": []
+		},
+		{
+			"label": "Build",
+			"dependsOn": [
+				"Check Code",
+				"Export Models",
+				"Compile Place",
+				"Open Place",
+				"Serve"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 		},
 		{
 			"label": "Install Foreman",

@@ -5,6 +5,9 @@
     "Workspace": {
       "$className": "Workspace",
       "$path": "src/workspace",
+      "Terrain": {
+          "$className": "Terrain"
+      },
       "Map": {
         "$path":"temp/models/map"
       }
@@ -42,7 +45,7 @@
       }
     },
     "StarterGui": {
-        "$className": "ServerStorage",
+        "$className": "StarterGui",
         "$path": "temp/models/gui"
     },
     "ServerStorage": {
