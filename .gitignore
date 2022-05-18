@@ -1,6 +1,9 @@
 # exclude exported place
-./place.rbxlx
-./place.rbxlx.lock
+place.rbxlx
+
+# exclude lock files
+place.rbxlx.lock
+sources.rbxlx.lock
 
 # exclude generated files
 temp/

@@ -7,7 +7,7 @@
 			"label": "Compile Place",
 			"type": "shell",
 			"command": "rojo build -o place.rbxlx",
-			"problemMatcher": [],
+			"problemMatcher": []
 		},
 		{
 			"label": "Export Models",
@@ -21,13 +21,17 @@
 		},
 		{
 			"label": "Build",
-			"dependsOn": ["Export Models", "Compile Place"]
+			"dependsOn": [
+				"Export Models",
+				"Compile Place"
+			],
+			"problemMatcher": []
 		},
 		{
 			"label": "Serve",
 			"type": "shell",
 			"command": "rojo serve",
-			"problemMatcher": [],
+			"problemMatcher": []
 		},
 		{
 			"label": "Open Place",
@@ -48,19 +52,19 @@
 			"label": "Install Foreman",
 			"type": "shell",
 			"command": "cargo install foreman",
-			"problemMatcher": [],
+			"problemMatcher": []
 		},
 		{
 			"label": "Install Tools",
 			"type": "shell",
 			"command": "foreman install",
-			"problemMatcher": [],
+			"problemMatcher": []
 		},
 		{
 			"label": "Pull Submodules",
 			"type": "shell",
 			"command": "git submodule update --init --recursive",
 			"problemMatcher": []
-		},
+		}
 	]
 }
