@@ -1,9 +1,9 @@
-[inputs."assets/ui/touch_button.png"]
-hash = "a3baf1f69bb17423ed62d957623bfc5aabd18a265a11bdcc5493abdfbf71d3ec"
-id = 9666952774
-packable = false
-
 [inputs."assets/ui/touch_button_pressed.png"]
 hash = "7da9e06d83f03812486a179e4992efe96a2c0c5a52e5059985713342a7af4812"
 id = 9666952890
+packable = false
+
+[inputs."assets/ui/touch_button_released.png"]
+hash = "a3baf1f69bb17423ed62d957623bfc5aabd18a265a11bdcc5493abdfbf71d3ec"
+id = 9667156142
 packable = false
