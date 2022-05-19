@@ -5,7 +5,6 @@
 		"init.lua": "*.lua"
 	},
 	"files.exclude": {
-		"Cmdr/**": true,
-		"ProfileService/**": true,
+		"vendor/*": true,
 	}
 }

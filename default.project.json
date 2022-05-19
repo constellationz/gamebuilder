@@ -34,10 +34,10 @@
       "Libraries": {
         "$className": "Folder",
         "Cmdr": {
-            "$path":"./Cmdr/Cmdr"
+            "$path":"./vendor/Cmdr/Cmdr"
         },
         "ProfileService": {
-            "$path": "./ProfileService/ProfileService.lua"
+            "$path": "./vendor/ProfileService/ProfileService.lua"
         }
       },
       "Assets": {
