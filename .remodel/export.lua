@@ -1,5 +1,5 @@
 -- Compiles models from models.rbxlx to the instance tree.
-local game = remodel.readPlaceFile("sources.rbxlx")
+local game = remodel.readPlaceFile("src/models.rbxlx")
 
 -- get source folders
 local exports = {

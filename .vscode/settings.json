@@ -1,4 +1,5 @@
 {
+	"explorer.sortOrder": "type",
 	"search.useGlobalIgnoreFiles": true,
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.patterns":{

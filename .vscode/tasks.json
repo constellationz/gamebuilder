@@ -16,6 +16,15 @@
 			"problemMatcher": [],
 		},
 		{
+			"label": "Delete Temp",
+			"type": "shell",
+			"command": "rm -r temp",
+			"problemMatcher": [],
+			"windows": {
+				"command": "Remove-Item -Recurse -Force \"temp\""
+			}
+		},
+		{
 			"label": "Compile Place",
 			"type": "shell",
 			"command": "rojo build -o place.rbxlx",
@@ -31,12 +40,24 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Open Sources",
+			"label": "Open Models",
 			"type": "shell",
 			"command": "",
 			"windows": {
-				"command": "explorer \\select,\"sources.rbxlx\""
+				"command": "explorer \\select,\"src\\models.rbxlx\""
 			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Sync Tarmac",
+			"type": "shell",
+			"command": "tarmac sync --target roblox",
+			"problemMatcher": []
+		},
+		{
+			"label": "Verify Tarmac Sync",
+			"type": "shell",
+			"command": "tarmac sync --target none",
 			"problemMatcher": []
 		},
 		{
@@ -49,6 +70,7 @@
 			"label": "Build",
 			"dependsOn": [
 				"Check Code",
+				"Delete Temp",
 				"Export Models",
 				"Compile Place",
 				"Open Place",

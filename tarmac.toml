@@ -1,0 +1,7 @@
+name = "gamebuilder"
+
+[[inputs]]
+glob = "assets/**/*.png"
+codegen = true
+codegen-path = "src/server/Modules/Common/Assets.lua"
+codegen-base-path = "assets"
