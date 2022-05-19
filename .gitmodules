@@ -1,6 +1,6 @@
 [submodule "Cmdr"]
-	path = Cmdr
+	path = vendor/Cmdr
 	url = https://github.com/evaera/Cmdr.git
 [submodule "ProfileService"]
-	path = ProfileService
+	path = vendor/ProfileService
 	url = https://github.com/MadStudioRoblox/ProfileService.git

@@ -31,6 +31,15 @@
 			"problemMatcher": []
 		},
 		{
+			"label": "Open Sources",
+			"type": "shell",
+			"command": "",
+			"windows": {
+				"command": "explorer \\select,\"sources.rbxlx\""
+			},
+			"problemMatcher": []
+		},
+		{
 			"label": "Serve",
 			"type": "shell",
 			"command": "rojo serve",
