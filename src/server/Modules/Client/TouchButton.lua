@@ -44,7 +44,9 @@ function TouchButton.new(parent: Instance, image: string)
 		lastTouch = button.Position,
 	}, TouchButton)
 
-	local processInput = function(...) self:ProcessInput(...) end
+	local processInput = function(...) 
+		self:ProcessInput(...)
+	end
 
 	-- connections
 	self.inputBegan = button.InputBegan:connect(processInput)
