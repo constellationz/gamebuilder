@@ -1,12 +1,12 @@
 -- Host for Cmdr
 
-local CmdrHost = {}
-
 local Get = require(workspace.Get)
 local G = Get "Common.Globals"
 local RunService = Get.Service "RunService"
 
-function CmdrServer()
+local CmdrHost = {}
+
+local function CmdrServer()
 	local Cmdr = Get.Lib "Cmdr"
 	local CmdrHooks = Get.Module "Server.Cmdr.Hooks"
 	local CmdrTypes = Get.Module "Server.Cmdr.Types"
@@ -19,7 +19,7 @@ function CmdrServer()
 	Cmdr:RegisterCommandsIn(CmdrCommands)
 end
 
-function CmdrClient()
+local function CmdrClient()
 	local ReplicatedStorage = Get.Service "ReplicatedStorage"
 	local Cmdr = require(ReplicatedStorage:WaitForChild("CmdrClient"))
 

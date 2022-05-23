@@ -1,12 +1,12 @@
 -- Adds LocalPlayer tag to local players
 
-local AddLocalPlayerTag = {}
-
 local Get = require(workspace.Get)
 local Players = Get.Service "Players"
 local CollectionService = Get.Service "CollectionService"
 
-function AddTag()
+local AddLocalPlayerTag = {}
+
+local function AddTag()
 	repeat 
 		task.wait() 
 	until Players.LocalPlayer ~= nil

@@ -1,5 +1,15 @@
 -- Handles client data and data saving
 
+local Get = require(workspace.Get)
+local Players = Get.Service "Players"
+local TagListener = Get "Common.TagListener"
+local ProfileService = Get.Lib "ProfileService"
+
+-- Stores to use
+local PlayerStore = Get "Server.Stores.PlayerStore"
+local OpenPlayerProfile
+local ClosePlayerProfile
+
 local Data = {
 	Messages = {
 		PlayerDataDidNotLoad = "Data could not be loaded, try rejoining"
@@ -11,16 +21,6 @@ local Data = {
 	-- Player profiles loaded with OpenPlayerProfile
 	PlayerProfiles = {},
 }
-
-local Get = require(workspace.Get)
-local Players = Get.Service "Players"
-local TagListener = Get "Common.TagListener"
-local ProfileService = Get.Lib "ProfileService"
-
--- Stores to use
-local PlayerStore = Get "Server.Stores.PlayerStore"
-local OpenPlayerProfile
-local ClosePlayerProfile
 
 function Data.Connect()
 	-- Open data profiles

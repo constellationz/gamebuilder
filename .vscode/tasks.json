@@ -12,7 +12,7 @@
 		{
 			"label": "Export Models",
 			"type": "shell",
-			"command": "remodel run export",
+			"command": "remodel run export-models",
 			"problemMatcher": [],
 		},
 		{

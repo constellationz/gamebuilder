@@ -1,11 +1,11 @@
 -- System for the Exec command
 
-local ExecHost = {}
-
 local Get = require(workspace.Get)
 local G = Get "Common.Globals"
 local Execute = Get.Remote "Execute"
 local Players = Get.Service "Players"
+
+local ExecHost = {}
 
 -- Environment to use for ExecHost commands
 local defaultEnv = {
@@ -35,12 +35,12 @@ local defaultEnv = {
 }
 
 -- Can this player execute arbitrary code?
-function CanExecute(player: Instance)
+local function CanExecute(player: Instance)
 	return G.IsOwner(player)
 end
 
 -- execute code
-function Exec(executor: Instance, code: string)
+local function Exec(executor: Instance, code: string)
 	assert(executor ~= nil, "Argument 1 missing or nil: executor")
 	assert(code ~= nil, "Argument 2 missing or nil: code")
 	assert(CanExecute(executor), "Player does not have permission to run Exec")
