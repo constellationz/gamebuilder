@@ -195,6 +195,12 @@ Get.Asset = Get.MakeSearcher(Assets, AssertExistence)
 Get.Lib = Get.MakeSearcher(Libraries, LoadModule)
 Get.LoadedModule = Get.MakeSearcher(Modules, LoadModule)
 
+-- Get a player gui
+if RunService:IsClient() then
+	local PlayerGui = Get.LocalPlayer().PlayerGui
+	Get.Gui = Get.MakeSearcher(PlayerGui, AssertExistence)
+end
+
 -- When Get(...) is called, it is passed here.
 -- By default, evaluates to Get.LoadedModule
 function RawGet(_, moduleName: string)

@@ -68,6 +68,7 @@
 		},
 		{
 			"label": "Build",
+			"dependsOrder": "sequence",
 			"dependsOn": [
 				"Check Code",
 				"Delete Temp",
