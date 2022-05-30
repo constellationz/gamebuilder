@@ -53,12 +53,6 @@ function Character.GetHumanoidRootPart(character)
 		and character:FindFirstChild("HumanoidRootPart") or nil
 end
 
--- get character forcefield
-function Character.GetForceField(character)
-	return character ~= nil 
-		and character:FindFirstChild("ForceField") or nil
-end
-
 -- get player from character
 function Character.GetPlayer(character)
 	return character ~= nil 

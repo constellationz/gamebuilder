@@ -106,16 +106,30 @@ function Get.LocalPlayer()
 	return Get.Service("Players").LocalPlayer
 end
 
+-- Get directories from location for search function
+local function GetDirectoriesFromLocation(location: table | string)
+	if typeof(location) == "table" then
+		return location
+	elseif typeof(location) == "string" then
+		return string.split(location, Get.Directory)
+	else
+		error("Could not get directories from location " .. location)
+	end
+end
+
 -- Looks for a child and returns it
 -- Allows recursive searches with directory markers
-function Get.Child(parent: Instance, location: string)
+function Get.Child(parent: Instance, location)
 	-- if either parameter is nil, silently return nil
 	if parent == nil or location == nil then
 		return
 	end
 
+	-- get directories to search
+	local directories = GetDirectoriesFromLocation(location)
+
 	-- search for child
-	return Search(parent, string.split(location, Get.Directory))
+	return Search(parent, directories)
 end
 
 -- Returns a function that searches for a module in directory
